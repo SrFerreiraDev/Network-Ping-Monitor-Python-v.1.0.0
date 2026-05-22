@@ -1,0 +1,77 @@
+import os
+import platform
+import time
+from datetime import datetime
+import subprocess
+
+# ===== CONFIG =====
+hosts = ["8.8.8.8", "1.1.1.1", "google.com"]
+intervalo = 5  # segundos
+log_file = "monitoramento.log"
+
+# ===== DETECTAR SISTEMA =====
+param = "-n 1" if platform.system().lower() == "windows" else "-c 1"
+
+def ping(host):
+    try:
+        if platform.system().lower() == "windows":
+            comando = ["ping", "-n", "1", host]
+        else:
+            comando = ["ping", "-c", "1", host]
+
+        resultado = subprocess.run(
+            comando,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+
+        if resultado.returncode == 0:
+            # extrair tempo (ms)
+            output = resultado.stdout.lower()
+
+            tempo = "N/A"
+            if "time=" in output:
+                tempo = output.split("time=")[-1].split("ms")[0].strip()
+
+            return True, tempo
+        else:
+            return False, None
+
+    except:
+        return False, None
+
+
+def log(mensagem):
+    with open(log_file, "a") as f:
+        f.write(mensagem + "\n")
+
+
+def cor(texto, status):
+    if status:
+        return f"\033[92m{texto}\033[0m"  # verde
+    else:
+        return f"\033[91m{texto}\033[0m"  # vermelho
+
+
+# ===== LOOP PRINCIPAL =====
+while True:
+    print("\n=== MONITORAMENTO DE REDE ===\n")
+
+    for host in hosts:
+        status, tempo = ping(host)
+        agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if status:
+            mensagem = f"[ONLINE] {host} - {tempo} ms"
+            print(cor(mensagem, True))
+        else:
+            mensagem = f"[OFFLINE] {host}"
+            print(cor(mensagem, False))
+
+        log(f"{agora} - {mensagem}")
+
+    time.sleep(intervalo)
+
+    # = Flash Instalado = #
+    

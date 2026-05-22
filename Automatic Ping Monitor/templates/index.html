@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitor de Rede</title>
+    <head>
+    <title>Monitor de Rede</title>
+
+    <meta http-equiv="refresh" content="5">
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+        /* resto do CSS */
+    </style>
+</head>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            background: #1e293b;
+        }
+
+        .online {
+            color: #22c55e;
+        }
+
+        .offline {
+            color: #ef4444;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Monitor de Rede</h1>
+
+    {% for item in resultados %}
+        <div class="card">
+            <h2>{{ item.host }}</h2>
+            <p class="{{ item.status|lower }}">{{ item.status }}</p>
+        </div>
+    {% endfor %}
+
+</body>
+</html>
