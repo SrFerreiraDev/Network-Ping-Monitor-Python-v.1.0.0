@@ -1,0 +1,24 @@
+# 🖥️ Network Ping Monitor Python
+
+Sistema de monitoramento de rede desenvolvido em Python com Flask.
+
+## 🚀 Funcionalidades
+
+- Ping automático em múltiplos hosts
+- Status ONLINE/OFFLINE
+- Dashboard web
+- Atualização automática
+- Registro de logs
+
+## 🛠️ Tecnologias
+
+- Python
+- Flask
+- HTML/CSS
+
+## ▶️ Como executar
+
+bash
+pip install -r requirements.txt
+python app.py
+Executar o Atalho .exe na pasta
